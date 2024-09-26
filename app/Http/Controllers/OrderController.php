@@ -33,31 +33,17 @@ class OrderController extends Controller
             'quantities.*' => 'integer|min:1',
         ]);
 
-        $order = DB::transaction(function () use ($request) {
-            $order = Order::create([
-                'customer_id' => $request->customer_id,
-                'total_amount' => 0,
-            ]);
+        $order = Order::create([
+            'customer_id' => $request->customer_id,
+            'total_amount' => 0,
+        ]);
 
-            $totalAmount = 0;
-            foreach ($request->products as $productId) {
-                $product = Product::findOrFail($productId);
-                $quantity = $request->quantities[$productId];
+        foreach ($request->products as $index => $productId) {
+            $quantity = $request->quantities[$productId] ?? 0;
+            $order->products()->attach($productId, ['quantity' => $quantity]);
+        }
 
-                if ($quantity > $product->amount) {
-                    throw new \Exception("Not enough stock for product: {$product->name}");
-                }
-
-                $order->products()->attach($productId, ['quantity' => $quantity]);
-                $totalAmount += $product->price * $quantity;
-
-                $product->decrement('amount', $quantity);
-            }
-
-            $order->update(['total_amount' => $totalAmount]);
-
-            return $order;
-        });
+        $order->recalculateTotalAmount();
 
         return redirect()->route('orders.index')->with('success', 'Order created successfully.');
     }
@@ -65,6 +51,7 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $order->load('customer', 'products');
+        $order->recalculateTotalAmount();
         return view('orders.show', compact('order'));
     }
 

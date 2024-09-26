@@ -7,18 +7,34 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'description',
         'price',
-        'amount',
         'category_id',
-        'brand_id'
+        'brand_id',
+        'amount'
     ];
 
-    protected $attributes = [
-        'amount' => 0, // встановіть значення за замовчуванням
-    ];
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updated(function ($product) {
+            if ($product->isDirty('price')) {
+                $product->updateRelatedOrders();
+            }
+        });
+    }
+
+    public function updateRelatedOrders()
+    {
+        foreach ($this->orders as $order) {
+            $order->recalculateTotalAmount();
+        }
+    }
 
     public function category()
     {
@@ -32,6 +48,6 @@ class Product extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Order::class)->withPivot('quantity');
     }
 }

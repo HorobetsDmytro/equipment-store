@@ -29,7 +29,7 @@
         </div>
         <div class="mb-3">
             <label for="amount" class="form-label">Amount</label>
-            <input type="integer" class="form-control @error('amount') is-invalid @enderror" id="amount" name="amount">{{ old('amount', $product->amount) }}</textarea>
+            <input type="number" class="form-control @error('amount') is-invalid @enderror" id="amount" name="amount" value="{{ old('amount', $product->amount) }}" required>
             @error('amount')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror

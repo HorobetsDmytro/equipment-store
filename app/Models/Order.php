@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'customer_id',
         'total_amount'
@@ -22,5 +20,14 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity');
+    }
+
+    public function recalculateTotalAmount()
+    {
+        $this->load('products'); // Ensure products are loaded
+        $this->total_amount = $this->products->sum(function ($product) {
+            return $product->price * $product->pivot->quantity;
+        });
+        $this->save();
     }
 }

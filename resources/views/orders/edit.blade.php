@@ -26,12 +26,12 @@
                     <input class="form-check-input product-checkbox" type="checkbox" name="products[]" value="{{ $product->id }}" id="product{{ $product->id }}"
                         {{ $order->products->contains($product->id) ? 'checked' : '' }}>
                     <label class="form-check-label" for="product{{ $product->id }}">
-                        {{ $product->name }} - {{ $product->price }}₴ (Available: {{ $product->quantity + ($order->products->where('id', $product->id)->first()->pivot->quantity ?? 0) }})
+                        {{ $product->name }} - {{ $product->price }}₴ (Available: {{ $product->amount + ($order->products->where('id', $product->id)->first()->pivot->quantity ?? 0) }})
                     </label>
                     <input type="number" name="quantities[{{ $product->id }}]" 
                            value="{{ $order->products->where('id', $product->id)->first()->pivot->quantity ?? 0 }}" 
                            min="0" 
-                           max="{{ $product->quantity + ($order->products->where('id', $product->id)->first()->pivot->quantity ?? 0) }}" 
+                           max="{{ $product->amount + ($order->products->where('id', $product->id)->first()->pivot->quantity ?? 0) }}" 
                            class="form-control form-control-sm d-inline-block product-quantity" 
                            style="width: 60px;" 
                            {{ $order->products->contains($product->id) ? '' : 'disabled' }}>

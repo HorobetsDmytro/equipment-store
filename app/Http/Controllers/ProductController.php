@@ -31,7 +31,7 @@ class ProductController extends Controller
             'price' => $request->input('price'),
             'category_id' => $request->input('category_id'),
             'brand_id' => $request->input('brand_id'),
-            'amount' => $request->input('amount'), // додайте це значення
+            'amount' => $request->input('amount'),
         ]);
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
@@ -50,7 +50,14 @@ class ProductController extends Controller
 
     public function update(ProductRequest $request, Product $product)
     {
-        $product->update($request->validated());
+        $product->update([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+            'amount' => $request->input('amount'),
+            'category_id' => $request->input('category_id'),
+            'brand_id' => $request->input('brand_id'),
+        ]);
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
@@ -58,5 +65,16 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+    }
+
+    public function updatePrice(Request $request, Product $product)
+    {
+        $request->validate([
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        $product->update(['price' => $request->price]);
+
+        return redirect()->route('products.index')->with('success', 'Product price updated successfully.');
     }
 }
