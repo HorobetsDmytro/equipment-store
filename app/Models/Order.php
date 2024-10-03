@@ -24,7 +24,7 @@ class Order extends Model
 
     public function recalculateTotalAmount()
     {
-        $this->load('products'); // Ensure products are loaded
+        $this->load('products');
         $this->total_amount = $this->products->sum(function ($product) {
             return $product->price * $product->pivot->quantity;
         });
