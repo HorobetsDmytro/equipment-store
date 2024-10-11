@@ -30,7 +30,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $customer->name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $customer->email }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $customer->phone }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <a href="{{ route('customers.show', $customer) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">View</a>
                             <a href="{{ route('customers.edit', $customer) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">Edit</a>
                             <form action="{{ route('customers.destroy', $customer) }}" method="POST" class="inline-block">

@@ -1,43 +1,48 @@
+<!-- orders/create.blade.php -->
 @extends('layouts.app')
 
 @section('content')
-    <h1>Create Order</h1>
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Create New Order</h2>
 
-    <form action="{{ route('orders.store') }}" method="POST">
+    <form action="{{ route('orders.store') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         @csrf
-        <div class="mb-3">
-            <label for="customer_id" class="form-label">Customer</label>
-            <select class="form-control @error('customer_id') is-invalid @enderror" id="customer_id" name="customer_id" required>
+        <div class="mb-4">
+            <label for="customer_id" class="block text-gray-700 text-sm font-bold mb-2">Customer</label>
+            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('customer_id') border-red-500 @enderror" id="customer_id" name="customer_id" required>
                 @foreach($customers as $customer)
                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                 @endforeach
             </select>
             @error('customer_id')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
-        <div class="mb-3">
-            <label class="form-label">Products</label>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Products</label>
             @foreach($products as $product)
-                <div class="form-check">
-                    <input class="form-check-input product-checkbox" type="checkbox" name="products[]" value="{{ $product->id }}" id="product{{ $product->id }}">
-                    <label class="form-check-label" for="product{{ $product->id }}">
+                <div class="flex items-center mb-2">
+                    <input class="mr-2 leading-tight" type="checkbox" name="products[]" value="{{ $product->id }}" id="product{{ $product->id }}">
+                    <label class="text-sm" for="product{{ $product->id }}">
                         {{ $product->name }} - {{ $product->price }}₴ (Available: {{ $product->amount }})
                     </label>
-                    <input type="number" name="quantities[{{ $product->id }}]" value="0" min="0" max="{{ $product->amount }}" class="form-control form-control-sm d-inline-block product-quantity" style="width: 60px;" disabled>
+                    <input type="number" name="quantities[{{ $product->id }}]" value="0" min="0" max="{{ $product->amount }}" class="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2" disabled>
                 </div>
             @endforeach
             @error('products')
-                <div class="invalid-feedback d-block">{{ $message }}</div>
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Create Order</button>
+        <div class="flex items-center justify-between">
+            <button type="submit" class="mt-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                Create Order
+            </button>
+        </div>
     </form>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const checkboxes = document.querySelectorAll('.product-checkbox');
-            const quantities = document.querySelectorAll('.product-quantity');
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const quantities = document.querySelectorAll('input[type="number"]');
 
             checkboxes.forEach((checkbox, index) => {
                 checkbox.addEventListener('change', function() {

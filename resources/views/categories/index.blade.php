@@ -20,7 +20,7 @@
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $category->name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $category->description }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <a href="{{ route('categories.show', $category) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
                             <a href="{{ route('categories.edit', $category) }}" class="ml-2 text-yellow-600 hover:text-yellow-900">Edit</a>
                             <form action="{{ route('categories.destroy', $category) }}" method="POST" class="inline-block ml-2">
