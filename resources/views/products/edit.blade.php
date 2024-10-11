@@ -1,65 +1,66 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Edit Product</h1>
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Edit Product</h2>
 
-    <form action="{{ route('products.update', $product) }}" method="POST">
+    <form action="{{ route('products.update', $product) }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         @csrf
         @method('PUT')
-        <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $product->name) }}" required>
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+            <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('name') border-red-500 @enderror" id="name" name="name" value="{{ old('name', $product->name) }}" required>
             @error('name')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
-        <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description', $product->description) }}</textarea>
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+            <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('description') border-red-500 @enderror" id="description" name="description" value="{{ old('description', $product->description) }}" required>
             @error('description')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
-        <div class="mb-3">
-            <label for="price" class="form-label">Price</label>
-            <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $product->price) }}" required>
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Price</label>
+            <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('price') border-red-500 @enderror" id="price" name="price" value="{{ old('price', $product->price) }}" required>
             @error('price')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
-        <div class="mb-3">
-            <label for="amount" class="form-label">Amount</label>
-            <input type="number" class="form-control @error('amount') is-invalid @enderror" id="amount" name="amount" value="{{ old('amount', $product->amount) }}" required>
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Amount</label>
+            <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('amount') border-red-500 @enderror" id="amount" name="amount" value="{{ old('amount', $product->amount) }}" required>
             @error('amount')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
-        <div class="mb-3">
-            <label for="category_id" class="form-label">Category</label>
-            <select class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id" required>
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Category</label>
+            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('category_id') border-red-500 @enderror" id="category_id" name="category_id" required>
                 @foreach($categories as $category)
-                    <option value="{{ $category->id }}" {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
-                        {{ $category->name }}
-                    </option>
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
             @error('category_id')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
-        <div class="mb-3">
-            <label for="brand_id" class="form-label">Brand</label>
-            <select class="form-control @error('brand_id') is-invalid @enderror" id="brand_id" name="brand_id" required>
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Brand</label>
+            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('brand_id') border-red-500 @enderror" id="brand_id" name="brand_id" required>
                 @foreach($brands as $brand)
-                    <option value="{{ $brand->id }}" {{ old('brand_id', $product->brand_id) == $brand->id ? 'selected' : '' }}>
-                        {{ $brand->name }}
-                    </option>
+                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                 @endforeach
             </select>
             @error('brand_id')
-                <div class="invalid-feedback">{{ $message }}</div>
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Update Product</button>
+        <!-- Repeat for other fields: description, price, amount, category_id, brand_id -->
+        <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Update Product
+            </button>
+        </div>
     </form>
 @endsection

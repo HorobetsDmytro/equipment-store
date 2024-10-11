@@ -1,42 +1,64 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Create New Product</h1>
-    
-    <form action="{{ route('products.store') }}" method="POST">
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-4">Create New Product</h2>
+
+    <form action="{{ route('products.store') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         @csrf
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+            <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('name') border-red-500 @enderror" id="name" name="name" value="{{ old('name') }}" required>
+            @error('name')
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="form-control" id="description" name="description" required></textarea>
+        <div class="mb-4">
+            <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('description') border-red-500 @enderror" id="description" name="description">{{ old('description') }}</textarea>
+            @error('description')
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="form-group">
-            <label for="price">Price</label>
-            <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+        <div class="mb-4">
+            <label for="price" class="block text-gray-700 text-sm font-bold mb-2">Price</label>
+            <input type="number" step="0.01" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('price') border-red-500 @enderror" id="price" name="price" value="{{ old('price') }}" required>
+            @error('price')
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="form-group">
-            <label for="amount">Amount</label>
-            <input type="integer" class="form-control" id="amount" name="amount" required>
+        <div class="mb-4">
+            <label for="amount" class="block text-gray-700 text-sm font-bold mb-2">Amount</label>
+            <input type="number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('amount') border-red-500 @enderror" id="amount" name="amount" value="{{ old('amount') }}" required>
+            @error('amount')
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="form-group">
-            <label for="category_id">Category</label>
-            <select class="form-control" id="category_id" name="category_id" required>
+        <div class="mb-4">
+            <label for="category_id" class="block text-gray-700 text-sm font-bold mb-2">Category</label>
+            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('category_id') border-red-500 @enderror" id="category_id" name="category_id" required>
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
+            @error('category_id')
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @enderror
         </div>
-        <div class="form-group">
-            <label for="brand_id">Brand</label>
-            <select class="form-control" id="brand_id" name="brand_id" required>
+        <div class="mb-4">
+            <label for="brand_id" class="block text-gray-700 text-sm font-bold mb-2">Brand</label>
+            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('brand_id') border-red-500 @enderror" id="brand_id" name="brand_id" required>
                 @foreach($brands as $brand)
                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                 @endforeach
             </select>
+            @error('brand_id')
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Create Product</button>
+        <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Create Product
+            </button>
+        </div>
     </form>
 @endsection
