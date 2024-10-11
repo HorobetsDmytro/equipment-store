@@ -56,9 +56,8 @@
                 <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
-        <!-- Repeat for other fields: description, price, amount, category_id, brand_id -->
         <div class="flex items-center justify-between">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <button type="submit" class="mt-4 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
                 Update Product
             </button>
         </div>
